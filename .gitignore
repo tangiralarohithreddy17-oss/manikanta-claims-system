@@ -1,0 +1,11 @@
+# Exclude local package dependencies
+node_modules/
+
+# Exclude local builds and temporary assets
+dist/
+temp-build/
+*.zip
+
+# Exclude backend databases and config
+backend/database.sqlite
+backend/.env
