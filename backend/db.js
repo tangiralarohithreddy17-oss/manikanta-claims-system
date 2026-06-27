@@ -12,7 +12,8 @@ if (DB_TYPE === 'postgres') {
   console.log('Using PostgreSQL database...');
   pgPool = new Pool({
     connectionString: process.env.DATABASE_URL,
-    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
+    connectionTimeoutMillis: 10000 // Timeout connection attempts after 10 seconds
   });
 } else {
   console.log('Using SQLite database...');

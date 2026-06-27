@@ -286,23 +286,22 @@ async function seedData() {
 }
 
 // Start Server
-async function startServer() {
-  try {
-    // 1. Init Database
-    await db.init();
+function startServer() {
+  app.listen(PORT, async () => {
+    console.log(`========================================================`);
+    console.log(`  MANIKANTA ENTERPRISES BACKEND RUNNING ON PORT ${PORT}`);
+    console.log(`========================================================`);
     
-    // 2. Seed default data if database is empty
-    await seedData();
-    
-    // 3. Listen on port
-    app.listen(PORT, () => {
-      console.log(`========================================================`);
-      console.log(`  MANIKANTA ENTERPRISES BACKEND RUNNING ON PORT ${PORT}`);
-      console.log(`========================================================`);
-    });
-  } catch (err) {
-    console.error('Failed to start server:', err);
-  }
+    try {
+      // 1. Init Database
+      await db.init();
+      
+      // 2. Seed default data if database is empty
+      await seedData();
+    } catch (err) {
+      console.error('Database initialization/seeding failed:', err);
+    }
+  });
 }
 
 startServer();
