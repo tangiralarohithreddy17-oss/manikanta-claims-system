@@ -87,13 +87,15 @@ export default function Sidebar({ user, onLogout }) {
           <span>Claims Registry</span>
         </NavLink>
 
-        <NavLink 
-          to="/claims/new" 
-          className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}
-        >
-          <PlusCircle size={18} />
-          <span>Log Goods Return</span>
-        </NavLink>
+        {user && user.role !== 'admin' && (
+          <NavLink 
+            to="/claims/new" 
+            className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}
+          >
+            <PlusCircle size={18} />
+            <span>Log Goods Return</span>
+          </NavLink>
+        )}
 
         {isManagerOrAdmin && (
           <NavLink 

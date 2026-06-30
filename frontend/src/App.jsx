@@ -96,7 +96,11 @@ export default function App() {
             />
             <Route 
               path="/claims/new" 
-              element={token ? <ClaimForm token={token} /> : <Navigate to="/login" />} 
+              element={
+                token && user.role !== 'admin' 
+                  ? <ClaimForm token={token} /> 
+                  : <Navigate to="/dashboard" />
+              } 
             />
             <Route 
               path="/claims/:id" 
