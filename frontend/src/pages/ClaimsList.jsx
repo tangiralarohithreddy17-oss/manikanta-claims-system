@@ -10,6 +10,8 @@ export default function ClaimsList({ token }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
+
   // Load filter states from URL search params
   const searchVal = searchParams.get('search') || '';
   const statusVal = searchParams.get('status') || '';
@@ -92,13 +94,15 @@ export default function ClaimsList({ token }) {
           <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginTop: '4px' }}>Track, audit, and inspect goods return requests submitted by dealers and retail stores.</p>
         </div>
         
-        <button 
-          onClick={() => navigate('/claims/new')}
-          className="btn btn-primary"
-        >
-          <Plus size={18} />
-          <span>Log Goods Return</span>
-        </button>
+        {user.role !== 'admin' && (
+          <button 
+            onClick={() => navigate('/claims/new')}
+            className="btn btn-primary"
+          >
+            <Plus size={18} />
+            <span>Log Goods Return</span>
+          </button>
+        )}
       </div>
 
       {/* Filters & Search Bar */}
