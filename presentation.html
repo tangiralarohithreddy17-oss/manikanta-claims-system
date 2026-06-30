@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claims Portal Presentation - Simple & Clear</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+      --card-bg: rgba(30, 41, 59, 0.75);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text-main: #f8fafc;
+      --text-muted: #cbd5e1;
+      --accent: #f59e0b; /* Amber */
+      --success: #10b981;
+      --transition-speed: 0.4s;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-main);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    header {
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(15, 23, 42, 0.5);
+      border-bottom: 1px solid var(--card-border);
+      backdrop-filter: blur(10px);
+      z-index: 10;
+    }
+
+    .logo-badge {
+      background: var(--accent);
+      color: #0f172a;
+      font-weight: 800;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .project-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-left: 10px;
+    }
+
+    .btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      padding: 8px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: #0f172a;
+      border: none;
+    }
+
+    .btn-accent:hover {
+      background: #fbbf24;
+      box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+    }
+
+    /* Slides Container */
+    .presentation-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+    }
+
+    .slide {
+      width: 100%;
+      max-width: 950px;
+      height: 480px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 50px 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.96) translateY(15px);
+      transition: opacity var(--transition-speed) ease, transform var(--transition-speed) ease;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1) translateY(0);
+      z-index: 2;
+    }
+
+    /* Typography */
+    .slide-num {
+      color: var(--accent);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 10px;
+    }
+
+    .slide h2 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 2.6rem;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+    }
+
+    .slide-body {
+      font-size: 1.3rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+    }
+
+    .slide-body ul {
+      list-style-type: none;
+    }
+
+    .slide-body li {
+      position: relative;
+      padding-left: 32px;
+      margin-bottom: 16px;
+    }
+
+    .slide-body li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: bold;
+      font-size: 1.4rem;
+    }
+
+    /* Title Slide */
+    .title-slide {
+      text-align: center;
+      align-items: center;
+    }
+
+    .title-slide h1 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 3.6rem;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+
+    .title-slide h3 {
+      font-size: 1.6rem;
+      color: var(--accent);
+      margin-bottom: 30px;
+      font-weight: 500;
+    }
+
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      color: var(--success);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--success);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    /* Grid Layouts */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      width: 100%;
+    }
+
+    .grid-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      padding: 20px 24px;
+      border-radius: 16px;
+    }
+
+    .grid-box h4 {
+      font-family: 'Outfit', sans-serif;
+      color: var(--accent);
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+    }
+
+    .grid-box p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Simple Table */
+    .simple-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    .simple-table th {
+      text-align: left;
+      padding: 14px;
+      border-bottom: 2px solid var(--card-border);
+      color: var(--accent);
+      font-size: 1.1rem;
+    }
+
+    .simple-table td {
+      padding: 16px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 1.15rem;
+    }
+
+    /* Speaker Notes panel */
+    .speaker-notes-panel {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      width: 100%;
+      max-width: 800px;
+      background: rgba(15, 23, 42, 0.98);
+      border: 1px solid var(--accent);
+      border-radius: 16px;
+      padding: 24px;
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .speaker-notes-panel.active {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .notes-title {
+      font-family: 'Outfit', sans-serif;
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 8px;
+    }
+
+    .notes-content {
+      font-size: 1.05rem;
+      line-height: 1.5;
+    }
+
+    /* Navigation Footer */
+    footer {
+      padding: 20px 40px;
+      background: rgba(15, 23, 42, 0.5);
+      border-top: 1px solid var(--card-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+    }
+
+    .progress-container {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .progress-bar-bg {
+      flex: 1;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--accent);
+      width: 10%;
+      border-radius: 3px;
+      transition: width var(--transition-speed) ease;
+    }
+
+    .slide-counter {
+      font-size: 1rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 16px;
+    }
+
+    .nav-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--card-border);
+      background: rgba(255,255,255,0.04);
+      color: var(--text-main);
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.3rem;
+      transition: all 0.2s ease;
+    }
+
+    .nav-btn:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.2);
+    }
+
+    .link-styled {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px dashed var(--accent);
+    }
+
+    .link-styled:hover {
+      color: #fbbf24;
+      border-bottom-style: solid;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div style="display: flex; align-items: center;">
+      <span class="logo-badge">ME</span>
+      <span class="project-title">Claims Portal Slide Deck</span>
+    </div>
+    <div style="display: flex; gap: 15px;">
+      <button class="btn" id="notes-btn" onclick="toggleNotes()">💬 Speaker Notes</button>
+      <button class="btn btn-accent" onclick="window.open('https://manikanta-claims-portal.vercel.app', '_blank')">🌐 Live Website</button>
+    </div>
+  </header>
+
+  <div class="presentation-container">
+
+    <!-- Slide 1 -->
+    <div class="slide title-slide active" data-notes="Welcome! This presentation describes the new online claims portal. The website is fully live, connected, and ready to use.">
+      <span class="slide-num">Slide 01</span>
+      <h1>Manikanta Enterprises</h1>
+      <h3>Goods Return & Claims Portal</h3>
+      <div style="margin-top: 20px;">
+        <div class="live-badge">
+          <span class="live-dot"></span> Live and Fully Operational
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide" data-notes="Why did we build this? To replace slow, manual checks and paper books with a fast online system.">
+      <span class="slide-num">Slide 02</span>
+      <h2>Why We Built This</h2>
+      <div class="slide-body">
+        <ul>
+          <li><strong>No More Paperwork</strong>: Replaces notebooks and spreadsheets.</li>
+          <li><strong>Real-Time Tracking</strong>: Know exactly where returned items are.</li>
+          <li><strong>Faster Customer Refunds</strong>: Process credit notes in days instead of weeks.</li>
+          <li><strong>Better Accuracy</strong>: Prevents writing mistakes for item names or quantities.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide" data-notes="Before the website, returns got delayed, information got lost, and it was hard to track who approved what.">
+      <span class="slide-num">Slide 03</span>
+      <h2>The Old Problems</h2>
+      <div class="grid-2">
+        <div class="grid-box">
+          <h4>Slow Processes</h4>
+          <p>Managers had to wait for paper sheets to travel from the warehouse floor to the office.</p>
+        </div>
+        <div class="grid-box">
+          <h4>Lost Information</h4>
+          <p>Returned items and credit requests were hard to find in paper logs.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="slide" data-notes="Three distinct roles ensure security and simplicity. Staff write the reports, managers approve them, and admins manage user accounts.">
+      <span class="slide-num">Slide 04</span>
+      <h2>Who Uses the Portal?</h2>
+      <div class="grid-2">
+        <div class="grid-box">
+          <h4>1. Warehouse Staff</h4>
+          <p>Logs new returns, runs physical checks, and writes reports.</p>
+        </div>
+        <div class="grid-box">
+          <h4>2. General Manager</h4>
+          <p>Reviews requests and makes final approval/rejection decisions.</p>
+        </div>
+      </div>
+      <div class="grid-box" style="margin-top: 20px;">
+        <h4>3. System Administrator</h4>
+        <p>Manages user accounts, passwords, and security settings.</p>
+      </div>
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="slide" data-notes="Each return follows these five simple steps, which you can track visually in the app.">
+      <span class="slide-num">Slide 05</span>
+      <h2>The 5 Simple Steps</h2>
+      <div class="slide-body">
+        <p>A return moves smoothly through this pipeline:</p>
+        <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin-top: 30px; text-align: center;">
+          <div class="grid-box" style="padding: 15px 5px;">
+            <div style="font-weight: 700; color: var(--accent); margin-bottom: 5px;">Step 1</div>
+            <div style="font-size: 0.95rem; font-weight: 600;">Submitted</div>
+          </div>
+          <div class="grid-box" style="padding: 15px 5px;">
+            <div style="font-weight: 700; color: var(--accent); margin-bottom: 5px;">Step 2</div>
+            <div style="font-size: 0.95rem; font-weight: 600;">Inspecting</div>
+          </div>
+          <div class="grid-box" style="padding: 15px 5px;">
+            <div style="font-weight: 700; color: var(--accent); margin-bottom: 5px;">Step 3</div>
+            <div style="font-size: 0.95rem; font-weight: 600;">Under Review</div>
+          </div>
+          <div class="grid-box" style="padding: 15px 5px;">
+            <div style="font-weight: 700; color: var(--accent); margin-bottom: 5px;">Step 4</div>
+            <div style="font-size: 0.95rem; font-weight: 600;">Approved</div>
+          </div>
+          <div class="grid-box" style="padding: 15px 5px;">
+            <div style="font-weight: 700; color: var(--accent); margin-bottom: 5px;">Step 5</div>
+            <div style="font-size: 0.95rem; font-weight: 600;">Closed</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 6 -->
+    <div class="slide" data-notes="We store data in clean, separate containers to keep the system organized and fast.">
+      <span class="slide-num">Slide 06</span>
+      <h2>Where Data is Stored</h2>
+      <table class="simple-table">
+        <thead>
+          <tr>
+            <th>Data Group</th>
+            <th>What is inside?</th>
+            <th>Why it is useful</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Users</strong></td>
+            <td>Logins, names, and access roles.</td>
+            <td>Controls who can perform what action.</td>
+          </tr>
+          <tr>
+            <td><strong>Claims</strong></td>
+            <td>Return details, item counts, invoice numbers.</td>
+            <td>Main record of returned products.</td>
+          </tr>
+          <tr>
+            <td><strong>Inspections</strong></td>
+            <td>Physical checks, photos, severity checks.</td>
+            <td>Records product condition.</td>
+          </tr>
+          <tr>
+            <td><strong>Audit Trail</strong></td>
+            <td>Who modified what data, and when.</td>
+            <td>Shows a full history of edits.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Slide 7 -->
+    <div class="slide" data-notes="Safety is paramount. The system makes sure roles are strictly enforced so staff cannot authorize payouts.">
+      <span class="slide-num">Slide 07</span>
+      <h2>Safety & Security Rules</h2>
+      <div class="slide-body">
+        <ul>
+          <li><strong>Role Enforcement</strong>: Warehouse staff cannot click the approve button.</li>
+          <li><strong>Authorized Login</strong>: Every user must log in with their own password.</li>
+          <li><strong>Secure Profile Panel</strong>: Users can change passwords easily.</li>
+          <li><strong>Traceability</strong>: Every edit is permanently tied to the user who did it.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Slide 8 -->
+    <div class="slide" data-notes="These features make it simple for anyone to manage returns.">
+      <span class="slide-num">Slide 08</span>
+      <h2>Main Features</h2>
+      <div class="grid-2">
+        <div class="grid-box">
+          <h4>Easy Search & Filter</h4>
+          <p>Search returns by name or filter them by status instantly.</p>
+        </div>
+        <div class="grid-box">
+          <h4>Real-Time Charts</h4>
+          <p>Interactive dashboard charts showing monthly returns and product damage trends.</p>
+        </div>
+      </div>
+      <div class="grid-2" style="margin-top: 20px;">
+        <div class="grid-box">
+          <h4>Action Audits</h4>
+          <p>A full history list showing all user updates in one place.</p>
+        </div>
+        <div class="grid-box">
+          <h4>Profile Updates</h4>
+          <p>Secure form to customize passwords and usernames.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 9 -->
+    <div class="slide" data-notes="The website is hosted on Vercel, the database is hosted on Render, ensuring maximum speed and security.">
+      <span class="slide-num">Slide 09</span>
+      <h2>Where the Website Runs</h2>
+      <div class="slide-body">
+        <ul>
+          <li><strong>The Website (Vercel)</strong>: Hosted on Vercel for fast loading speeds on both computers and phones.</li>
+          <li><strong>The Server (Render)</strong>: Express server hosted on Render to process commands and check logins.</li>
+          <li><strong>The Database (PostgreSQL)</strong>: Live PostgreSQL database hosted securely on Render.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Slide 10 -->
+    <div class="slide" data-notes="Use these links and passwords to test the different roles yourself right now.">
+      <span class="slide-num">Slide 10</span>
+      <h2>Live Links & Access Passwords</h2>
+      <div class="slide-body">
+        <p>The website is fully working and live:</p>
+        <div style="margin-top: 15px; margin-bottom: 25px;">
+          👉 <strong>Live Portal:</strong> <a href="https://manikanta-claims-portal.vercel.app" target="_blank" class="link-styled" style="font-weight: 700;">https://manikanta-claims-portal.vercel.app</a>
+        </div>
+        <div class="grid-box" style="background: rgba(255,255,255,0.01);">
+          <div style="font-weight: 700; margin-bottom: 12px; color: var(--accent); font-size: 1.15rem;">Demo Login Accounts:</div>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; font-size: 1.05rem;">
+            <div>👤 <strong>Admin:</strong><br>admin / admin123</div>
+            <div>👤 <strong>Staff:</strong><br>staff / staff123</div>
+            <div>👤 <strong>Manager:</strong><br>manager / manager123</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Speaker Notes Container -->
+  <div class="speaker-notes-panel" id="notes-panel">
+    <div class="notes-title">💬 Speaker Notes (Slide <span id="notes-slide-num">1</span>)</div>
+    <div class="notes-content" id="notes-text">
+      Welcome! This presentation describes the new online claims portal. The website is fully live, connected, and ready to use.
+    </div>
+  </div>
+
+  <footer>
+    <div class="progress-container">
+      <span class="slide-counter" id="counter">1 / 10</span>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progress-fill"></div>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="nav-btn" onclick="prevSlide()">◀</button>
+      <button class="nav-btn" onclick="nextSlide()">▶</button>
+    </div>
+  </footer>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const fill = document.getElementById('progress-fill');
+    const counter = document.getElementById('counter');
+    const notesText = document.getElementById('notes-text');
+    const notesSlideNum = document.getElementById('notes-slide-num');
+    let notesVisible = false;
+
+    function updateSlides() {
+      slides.forEach((slide, index) => {
+        if (index === currentSlide) {
+          slide.classList.add('active');
+        } else {
+          slide.classList.remove('active');
+        }
+      });
+      
+      // Update progress bar
+      const progressPercent = ((currentSlide + 1) / slides.length) * 100;
+      fill.style.width = `${progressPercent}%`;
+      
+      // Update counter
+      counter.innerText = `${currentSlide + 1} / ${slides.length}`;
+      
+      // Update speaker notes
+      const activeSlide = slides[currentSlide];
+      const notes = activeSlide.getAttribute('data-notes');
+      notesText.innerText = notes || "No speaker notes for this slide.";
+      notesSlideNum.innerText = currentSlide + 1;
+    }
+
+    function nextSlide() {
+      if (currentSlide < slides.length - 1) {
+        currentSlide++;
+        updateSlides();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        updateSlides();
+      }
+    }
+
+    function toggleNotes() {
+      const panel = document.getElementById('notes-panel');
+      const btn = document.getElementById('notes-btn');
+      notesVisible = !notesVisible;
+      
+      if (notesVisible) {
+        panel.classList.add('active');
+        btn.style.borderColor = 'var(--accent)';
+        btn.style.color = 'var(--accent)';
+      } else {
+        panel.classList.remove('active');
+        btn.style.borderColor = 'var(--card-border)';
+        btn.style.color = 'var(--text-main)';
+      }
+    }
+
+    // Keyboard Arrow Controls
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        prevSlide();
+      } else if (e.key.toLowerCase() === 's') {
+        toggleNotes();
+      }
+    });
+
+    // Initialize progress bar width
+    updateSlides();
+  </script>
+</body>
+</html>

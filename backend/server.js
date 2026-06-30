@@ -30,6 +30,22 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'healthy', database: db.dbType, timestamp: new Date() });
 });
 
+// Diagnostic endpoint to inspect data tables directly in the browser
+app.get('/api/view-tables', async (req, res) => {
+  try {
+    const claims = await db.query('SELECT * FROM claims');
+    const users = await db.query('SELECT username, role, name FROM users');
+    const audits = await db.query('SELECT * FROM audit_logs ORDER BY created_at DESC LIMIT 50');
+    res.json({
+      claims: claims.rows,
+      users: users.rows,
+      audit_logs: audits.rows
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Database seeding logic
 async function seedData() {
   try {
