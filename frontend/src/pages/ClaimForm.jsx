@@ -50,6 +50,13 @@ export default function ClaimForm({ token }) {
     setLoading(true);
     setError('');
 
+    const phoneRegex = /^\d{10}$/;
+    if (!phoneRegex.test(contactNumber)) {
+      setError('Contact number must be exactly 10 digits and contain only numbers.');
+      setLoading(false);
+      return;
+    }
+
     if (parseInt(quantityReturned, 10) <= 0) {
       setError('Returned quantity must be greater than zero.');
       setLoading(false);
@@ -181,13 +188,14 @@ export default function ClaimForm({ token }) {
 
         <div className="form-row">
           <div className="form-group">
-            <label className="form-label">Contact Number</label>
+            <label className="form-label">Contact Number (10 Digits) *</label>
             <input 
-              type="tel" 
+              type="text" 
               className="form-control" 
               placeholder="e.g. 9876543210"
               value={contactNumber}
-              onChange={(e) => setContactNumber(e.target.value)}
+              onChange={(e) => setContactNumber(e.target.value.replace(/\D/g, '').slice(0, 10))}
+              required
             />
           </div>
 

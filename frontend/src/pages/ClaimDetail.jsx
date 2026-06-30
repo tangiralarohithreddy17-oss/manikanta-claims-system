@@ -68,6 +68,14 @@ export default function ClaimDetail({ token, user }) {
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     setActionLoading(true);
+
+    const phoneRegex = /^\d{10}$/;
+    if (!phoneRegex.test(editContactNumber)) {
+      alert('Contact number must be exactly 10 digits and contain only numbers.');
+      setActionLoading(false);
+      return;
+    }
+
     try {
       const res = await fetch(`${API_BASE_URL}/api/claims/${id}`, {
         method: 'PUT',
@@ -454,12 +462,13 @@ export default function ClaimDetail({ token, user }) {
 
                 <div className="form-row" style={{ marginBottom: '16px' }}>
                   <div className="form-group">
-                    <label className="form-label">Contact Number</label>
+                    <label className="form-label">Contact Number (10 Digits) *</label>
                     <input 
                       type="text" 
                       className="form-control" 
                       value={editContactNumber} 
-                      onChange={(e) => setEditContactNumber(e.target.value)} 
+                      onChange={(e) => setEditContactNumber(e.target.value.replace(/\D/g, '').slice(0, 10))} 
+                      required
                     />
                   </div>
                   <div className="form-group">
